@@ -71,8 +71,10 @@
             noButton.style.display = 'none';
         }
 
+        // Event listener for Yes button
         yesButton.addEventListener('click', changeImage);
 
+        // Event listener for No button
         noButton.addEventListener('click', () => {
             const rect = noButton.getBoundingClientRect();
             const randomX = Math.random() * (window.innerWidth - rect.width);
@@ -80,6 +82,23 @@
             noButton.style.position = 'absolute';
             noButton.style.left = randomX + 'px';
             noButton.style.top = randomY + 'px';
+        });
+
+        // Event listener for mouseover on No button
+        noButton.addEventListener('mouseover', () => {
+            const rect = noButton.getBoundingClientRect();
+            const randomX = Math.random() * (window.innerWidth - rect.width);
+            const randomY = Math.random() * (window.innerHeight - rect.height);
+            // Smoothly transition to the new position
+            noButton.style.transition = 'left 1s, top 1s';
+            noButton.style.left = randomX + 'px';
+            noButton.style.top = randomY + 'px';
+        });
+
+        // Event listener for mouseout on No button
+        noButton.addEventListener('mouseout', () => {
+            // Stop transition when mouse moves out
+            noButton.style.transition = 'none';
         });
     </script>
 </body>
