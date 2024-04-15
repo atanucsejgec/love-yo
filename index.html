@@ -100,6 +100,11 @@
             // Stop transition when mouse moves out
             noButton.style.transition = 'none';
         });
+
+        // Event listener to keep the No button visible on mouseover
+        noButton.addEventListener('mousemove', () => {
+            noButton.style.display = 'block';
+        });
     </script>
 </body>
 </html>
