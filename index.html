@@ -25,6 +25,8 @@
         }
         #buttons {
             margin-top: 20px;
+            display: flex; /* Display buttons side by side */
+            justify-content: center; /* Center buttons horizontally */
         }
         button {
             padding: 10px 20px;
@@ -38,7 +40,10 @@
             transition: transform 0.2s;
         }
         #no-button {
-            position: relative;
+            position: fixed;
+            left: 55%;
+            top: 51%;
+            transform: translate(-50%, -50%);
         }
         button:hover {
             transform: scale(1.1); /* adding hover effect */
@@ -60,7 +65,7 @@
         const mainImage = document.getElementById('main-image');
 
         // Array of images
-        const images = ["love you.jpg"];
+        const images = ["oh-yay.gif"];
         let currentIndex = 0;
 
         // Function to change the image
@@ -74,7 +79,23 @@
         // Event listener for Yes button
         yesButton.addEventListener('click', changeImage);
 
-        // Event listener for No button
+        // Event listener for mouse movement to move No button
+        document.addEventListener('mousemove', (event) => {
+            const mouseX = event.clientX;
+            const mouseY = event.clientY;
+            const buttonRect = noButton.getBoundingClientRect();
+            const distance = Math.sqrt(Math.pow(mouseX - (buttonRect.left + buttonRect.width / 2), 2) + Math.pow(mouseY - (buttonRect.top + buttonRect.height / 2), 2));
+
+            if (distance < 100) { // If mouse is within 100px of the button
+                const randomX = Math.random() * (window.innerWidth - buttonRect.width);
+                const randomY = Math.random() * (window.innerHeight - buttonRect.height);
+                noButton.style.transition = 'left 1s, top 1s';
+                noButton.style.left = randomX + 'px';
+                noButton.style.top = randomY + 'px';
+            }
+        });
+
+        // Event listener for No button click
         noButton.addEventListener('click', () => {
             const rect = noButton.getBoundingClientRect();
             const randomX = Math.random() * (window.innerWidth - rect.width);
@@ -82,28 +103,6 @@
             noButton.style.position = 'absolute';
             noButton.style.left = randomX + 'px';
             noButton.style.top = randomY + 'px';
-        });
-
-        // Event listener for mouseover on No button
-        noButton.addEventListener('mouseover', () => {
-            const rect = noButton.getBoundingClientRect();
-            const randomX = Math.random() * (window.innerWidth - rect.width);
-            const randomY = Math.random() * (window.innerHeight - rect.height);
-            // Smoothly transition to the new position
-            noButton.style.transition = 'left 1s, top 1s';
-            noButton.style.left = randomX + 'px';
-            noButton.style.top = randomY + 'px';
-        });
-
-        // Event listener for mouseout on No button
-        noButton.addEventListener('mouseout', () => {
-            // Stop transition when mouse moves out
-            noButton.style.transition = 'none';
-        });
-
-        // Event listener to keep the No button visible on mouseover
-        noButton.addEventListener('mousemove', () => {
-            noButton.style.display = 'block';
         });
     </script>
 </body>
